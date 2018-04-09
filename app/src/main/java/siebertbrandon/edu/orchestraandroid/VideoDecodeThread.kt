@@ -13,7 +13,7 @@ import java.io.IOException
  */
 class VideoDecodeThread : Thread() {
     private val VIDEO = "video/"
-    private val TAG = "VideoDecoder"
+    private val TAG = "[VD]"
     private var mExtractor: MediaExtractor? = null
     private var mDecoder: MediaCodec? = null
 
@@ -27,14 +27,15 @@ class VideoDecodeThread : Thread() {
             mExtractor!!.setDataSource(fd)
 
             for (i in 0 until mExtractor!!.trackCount) {
-                val format = mExtractor!!.getTrackFormat(i)
 
+                val format = mExtractor!!.getTrackFormat(i)
                 val mime = format.getString(MediaFormat.KEY_MIME)
+
                 if (mime.startsWith(VIDEO)) {
                     mExtractor!!.selectTrack(i)
                     mDecoder = MediaCodec.createDecoderByType(mime)
                     try {
-                        Log.d(TAG, "format : " + format)
+                        Log.d(TAG, "Set Video Format: $format")
                         mDecoder!!.configure(format, surface, null, 0 /* Decoder */)
 
                     } catch (e: IllegalStateException) {
