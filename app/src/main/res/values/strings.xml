@@ -4,4 +4,5 @@
     <string name="start_button">Start</string>
     <string name="settings_button">Settings</string>
     <string name="toggle_scroll_view">Toggle</string>
+    <string name="main_menu_title_alt">Orchestra</string>
 </resources>

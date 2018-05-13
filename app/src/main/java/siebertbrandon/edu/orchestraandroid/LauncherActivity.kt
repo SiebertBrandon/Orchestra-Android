@@ -2,7 +2,6 @@ package siebertbrandon.edu.orchestraandroid
 
 import android.Manifest
 import android.app.Activity
-import android.app.ActivityManager
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
 import android.content.Context
@@ -14,10 +13,8 @@ import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
-import android.view.MenuItem
-import kotlinx.android.synthetic.main.*
 import kotlinx.android.synthetic.main.main_menu.*
-import siebertbrandon.edu.orchestraandroid.BluetoothControl as BC
+import siebertbrandon.edu.orchestraandroid.BluetoothControlSettings as BC
 
 class LauncherActivity : AppCompatActivity() {
 
@@ -25,36 +22,30 @@ class LauncherActivity : AppCompatActivity() {
     private val PERMISSIONS_STORAGE = arrayOf<String>(Manifest.permission.READ_EXTERNAL_STORAGE,
                                                       Manifest.permission.WRITE_EXTERNAL_STORAGE)
     private val PERMISSIONS_LOCATION = arrayOf<String>(Manifest.permission.ACCESS_FINE_LOCATION)
-    private var bluetoothThread : BluetoothThread? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         // Verify that the app has
         verifyStoragePermissions(this)
-        BC.bluetoothEnabled = false
+        BC.enabled = false
 
-        println(Environment.getExternalStorageDirectory().getPath() + "/")
+        println(Environment.getExternalStorageDirectory().path + "/")
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_menu)
 
         BC.mBluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
         BC.mBluetoothAdapter = BC.mBluetoothManager!!.adapter
-        if (BC.mBluetoothAdapter == null || !BC.mBluetoothAdapter!!.isEnabled()) {
-            val enableBtIntent = BluetoothAdapter.ACTION_REQUEST_ENABLE as Intent
+        if (BC.mBluetoothAdapter == null || !BC.mBluetoothAdapter!!.isEnabled) {
+            val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
             startActivityForResult(enableBtIntent, 1)
         }
 
         Log.d("[OrchestraUI]", "onCreate -> Main Menu")
 
-        //Begin Bluetooth
-        BC.bluetoothEnabled = true
-        bluetoothThread = BluetoothThread(this)
-        bluetoothThread!!.start()
-
 
         buttonVideo.setOnClickListener { name ->
-            startActivity(Intent(this, OrchestraVideoActivity::class.java).apply {
+            startActivity(Intent(this, FullScreenVideoView::class.java).apply {
                 // Add any extra intent payloads here
             })
         }
@@ -63,7 +54,7 @@ class LauncherActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        BC.bluetoothEnabled = false
+        BC.enabled = false
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -71,17 +62,7 @@ class LauncherActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        //return when (item.itemId) {
-            //R.id.action_settings -> true
-        /*    else ->*/return super.onOptionsItemSelected(item)
-        //}
-    }
-
-    fun verifyStoragePermissions(activity: Activity) {
+    private fun verifyStoragePermissions(activity: Activity) {
         // Check if we have write permission
         val permission_write_external = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         val permission_read_external = ActivityCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE)

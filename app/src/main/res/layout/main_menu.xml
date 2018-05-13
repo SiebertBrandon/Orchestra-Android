@@ -21,6 +21,7 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/main_menu_title_alt"
             app:srcCompat="@drawable/orchestra_main_menu" />
 
         <Space

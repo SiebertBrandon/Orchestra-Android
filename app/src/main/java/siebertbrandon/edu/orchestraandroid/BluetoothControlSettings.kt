@@ -6,11 +6,10 @@ import android.bluetooth.BluetoothManager
 /**
  * Created by Brandon on 3/9/2018.
  */
-class BluetoothControl {
+class BluetoothControlSettings {
     companion object {
-        var bluetoothEnabled: Boolean = false
+        var enabled: Boolean = false
         var mBluetoothAdapter : BluetoothAdapter? = null
         var mBluetoothManager : BluetoothManager? = null
-        var scanningMessage: String = ""
     }
 }
