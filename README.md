@@ -1,5 +1,6 @@
 # Orchestra - Android Application
-The android application portion of my Orchestra senior project. This app connects with the conductor to synchronize video playback
+![Orchestra Concept Art](https://imgur.com/K6COogC.png)
+Orchestra is a video synchronization application designed to synchronize video playback on any platform that has supporting binaries.
 
 ## Intention
 
