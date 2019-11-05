@@ -8,15 +8,17 @@ Orchestra is a video synchronization application designed to synchronize video p
 
 ## How it works
 
-// TODO
+![Orchestra Conceptual Diagram](https://imgur.com/06A7TN9.png)
 
 ## Block Diagrams
 
-// TODO
+![Orchestra Packet Transmission Diagram](https://imgur.com/MGRCPCb.png)
 
 ## The Conductor
 
-// TODO
+![BLE Advertisement Channels vs 2.4 GHz Band]()
+
+![Orchestra Threading Diagram](https://imgur.com/PoWsSHx.png)
 
 ## Setup
 
